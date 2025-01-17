@@ -36,7 +36,14 @@ public class MySQLDatabaseExample {
     }
 
     public static void insertData(Connection connection) throws SQLException {
-        String insertSQL = "INSERT INTO users (name, age, email) VALUES "
+
+            String truncateSQL = "TRUNCATE TABLE users";
+            try (Statement truncateStatement = connection.createStatement()) {
+                truncateStatement.execute(truncateSQL);
+                System.out.println("Table 'users' truncated.");
+            }
+
+            String insertSQL = "INSERT INTO users (name, age, email) VALUES "
                 + "('John', 30, 'john@example.com'), "
                 + "('Alice', 25, 'alice@example.com'), "
                 + "('Bob', 35, 'bob@example.com');";
